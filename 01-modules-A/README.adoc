@@ -1,0 +1,121 @@
+== Java Module
+
+=== Hello Java 11
+
+==== Aufgabenstellung:
+. Erstelle in der IDE im Projekt "01-modules-A" unter src/main/java die Datei "jupdate.modules,Hello" an
+. Stelle sicher, dass das Projekt ein JDK 11 verwendet und das Projekt für die Kompilierung mit Java 11 konfiguriert ist
+. Implementiere in der Klasse die „main“-Methode, welche „Hello Java 11“ ausgibt
+. Kompiliere die Klasse und führe sie aus
+
+.Klasse HelloJava11
+[source,java]
+----
+package jupdate.modules;
+
+public class HelloJava11 {
+    public static void main(String[] args) {
+        System.out.println("Hello Java 11");
+    }
+}
+----
+
+==== Build-Befehle
+
+.Windows
+[source,shell]
+----
+rmdir /s /q out
+md out
+javac -d out src/main/java/jupdate/modules/HelloJava11.java
+java -cp out jupdate.modules.HelloJava11
+----
+
+.macOS, Linux
+[source,shell]
+----
+rm -r out
+mkdir out
+javac -d out src/main/java/jupdate/modules/HelloJava11.java
+java -cp out jupdate.modules.HelloJava11
+----
+
+==== Ergebnis:
+Wie wir es von älteren Java Versionen gewohnt sind, startet unser Programm und gibt die Zeile „Hello Java 11“ aus. Es sind keine gesonderten Einstellungen oder Anpassungen für den Start unseres Programm notwendig.
+
+
+=== Entfernte APIs
+
+==== Aufgabenstellung:
+. Gehe in das Projekt/Modul 01-modules-A
+. Die Klasse HelloJaxb ist bereits fertig
+. Kompiliere und starte die Klasse
+
+.Klasse HelloJaxb
+[source,java]
+----
+package jupdate.modules;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+public class HelloJaxb {
+    public static void main(String[] args) throws JAXBException {
+        JAXBContext.newInstance(Test.class).createMarshaller()
+                .marshal(new Test("Demo"), System.out);
+    }
+    @XmlRootElement
+    public static class Test {
+        @XmlElement
+        private String value;
+        public Test(String value) {
+            this.value = value;
+        }
+        public Test() {}
+    }
+}
+----
+
+==== Build-Befehle
+
+.Windows
+[source,shell]
+----
+rmdir /s /q out
+md out
+rem Fehler:
+javac -d out src/main/java/jupdate/modules/HelloJaxb.java
+
+rem korrigiert:
+javac -p lib --add-modules java.xml.bind -d out src/main/java/jupdate/modules/HelloJaxb.java
+
+rem Fehler:
+java -cp out jupdate.modules.HelloJaxb
+
+rem korrigiert:
+java -p lib --add-modules java.xml.bind -cp out jupdate.modules.HelloJaxb
+----
+
+
+.macOS, Linux
+[source,shell]
+----
+rm -r out
+mkdir out
+# Fehler:
+javac -d out src/main/java/jupdate/modules/HelloJaxb.java
+
+# korrigiert:
+javac -p lib --add-modules java.xml.bind -d out src/main/java/jupdate/modules/HelloJaxb.java
+
+# Fehler:
+java -cp out jupdate.modules.HelloJaxb
+
+# korrigiert:
+java -p lib --add-modules java.xml.bind -cp out jupdate.modules.HelloJaxb
+----
+
+==== Ergebnis:
+Die Übung zeigt, dass im Vergleich zu Java 8 in Java 11 bestimmte APIs fehlen. Diese müssen für die Benutzung aus externen Quellen bezogen werden. Somit lassen sich Anwendungen, welche mit älteren Java Versionen entwickelt wurden auch mit Java 11 einsetzen und weiterentwickeln.

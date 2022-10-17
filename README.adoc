@@ -1,0 +1,83 @@
+== Java Modulsystem
+
+Hier sind die Übungsbeschreibungen zu den Modulübungen.
+
+Die Beschreibungen zu den anderen Übungen sind in den weiligen Unterordnern.
+
+=== Automatic Modules - Teil 1
+
+==== Hinweis:
+Im Verlauf der nachfolgenden Übungen wird Schritt für Schritt eine modularisierte Beispielanwendung entwickelt. In den Beschreibungen werden verschiedene Packages genannt, welche mit „jupdate“ beginnen. DEr Teil „jupdate“ darf gerne durch andere Basis-Package-Namen ersetzen (z.B. „jupdate.main“ zu „com.example.main“). Damit die Übungen im späteren Verlauf korrekt funktionieren, müssen die Packages aber anhand ihres Suffix klar unterscheidbar sein.
+Die einzelnen Zwischenschritte können können für späteres Selbststudium gesichert werden.
+
+==== Aufgabenstellung:
+. Erstellt in Eurer IDE ein neues Java 9 Projekt
+. In Eclipse nennen wir dieses Projekt „main“
+. In IntelliJ IDEA erstellen wir ein Modul „main“
+. Wir erstellen eine Klasse „StringUtil“ im package „jupdate.util“, welche eine statische Methode „flip“ zum Umkehren von Strings anbietet
+. Wir erstellen Sie eine neue Klasse „Main“ im Package „jupdate.main“ mit einer „main“-Methode
+. Wir rufen in der „main“-Methode die Methode „flip“ in StringUtil auf und geben sie mit Hilfe von dieser auf der Konsole aus
+
+
+.Klasse StringUtil
+[source,java]
+----
+package jupdate.util;
+
+public final class StringUtil {
+
+	private StringUtil() {
+	}
+
+	public static String flip(String s) {
+		final StringBuffer flippedString = new StringBuffer();
+
+		for (int i = (s.length() - 1); i >= 0; i--) {
+			flippedString.append(s.charAt(i));
+		}
+
+		return flippedString.toString();
+	}
+}
+----
+
+.Klasse StringUtil
+[source,java]
+----
+package jupdate.main;
+
+import jupdate.util.StringUtil;
+
+public class Main {
+
+	public static void main(String[] args) {
+		System.out.println(StringUtil.flip("!dlroW olleH"));
+	}
+}
+----
+
+=== Automatic Modules - Teil 2
+
+==== Aufgabenstellung:
+. Kompiliere die Quelltexte zu *.class Dateien. Nutzen Sie hierfür entweder Ihre IDE oder die Kommandozeile
+. Erzeuge aus Ihren *.class Dateien eine *.jar Datei
+. Starte die Anwendung und lade die *.jar Datei über den Classpath
+. Ermittle mit Hilfe des Kommandos „jar“ den generierten Namen der *.jar Datei
+. Starte die Anwendung und lade die *.jar Datei über den Module Path
+
+.Shell
+[source,shell]
+----
+mkdir out
+mkdir lib
+javac -d out src/jupdate/main/Main.java src/jupdate/util/StringUtil.java
+jar --create --file lib/main.jar -C out .
+java -cp lib/main.jar jupdate.main.Main
+jar -d --file lib/main.jar
+java -p lib/main.jar -m main/jupdate.main.Main
+----
+
+
+==== Ergebnis:
+Einfache *.jar-Dateien können ohne Erweiterungen für das Modulsystem auch als Module eingesetzt werden. Dies ermöglicht eine einfache Nutzung von Anwendungsbestandteilen sowohl in einer modularisierten, als auch in einer nicht modularisierten Umgebung.
+

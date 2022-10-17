@@ -237,3 +237,88 @@ $ java --add-modules ALL-MODULE-PATH -p ../util/lib/util.jar -cp "out-test;lib-t
 Wir haben gesehen, dass sich JUnit Tests für modularisierte Awendungen umsetzen lassen, hierbei allerdings das Modulsystem umgangen wird. Dieser Trick ist für alle Junit Versionen bis einschließlich 5.0.x zwingend notwendig. Dieses Vorgehen ist außerdem mit anderen Testwerkzeugen notwendig, welche noch nicht für die Benutzung im Kontext von Java Modulen angepasst wurden.
 
 
+=== ServiceLoader in der modularen Welt - Teil 1
+
+==== Aufgabenstellung:
+
+. In Eclipse
+.. Lege ein neues Java-Projekt „api“ an
+.. Füge das Projekt „api“ zum Module Path der Projekte „main“ und „util“ hinzu und entfernen Sie „util“ vom Module Path des Projekts „main“
+. In IntelliJ IDEA
+.. Erstellen Sie ein neues Modul namens „api“ in ihrem Projekt und richten Sie ein Quellverzeichnis „src“ ein
+.. Fügen Sie eine Abhängigkeit auf das Module „api“ zu den Modulen „main“ und „util“ hinzu und entfernen sie die Abhängigkeit von „main“ auf „util“
+
+.module-info.java
+[source,java]
+----
+module jupdate.api {
+	exports jupdate.api;
+}
+----
+
+.module-info.java
+[source,java]
+----
+module jupdate.util {
+	requires jupdate.api;
+	provides jupdate.api.StringUtil with jupdate.util.StringUtilImpl;
+}
+----
+
+.module-info.java Dateien
+[source,java]
+----
+module jupdate.main {
+	requires jupdate.api;
+	uses jupdate.api.StringUtil;
+}
+----
+
+. Erstellen Sie die Datei „module-info.java“ in Ihrem neuen Quellverzeichnis und deklarieren Sie dort das Modul „jupdate.api“
+. Erstellen Sie im Modul „jupdate.api“ das Interface „jupdate.api.StringUtil“, welches die Methode „flip“ aus den vorigen Übungen definiert
+. Exportieren Sie das Package „jupdate.api“
+. Definieren Sie Abhängigkeiten von den Modulen „jupdate.main“ und „jupdate.util“ auf „jupdate.api“ und entfernen Sie die Anhängigkeit von „jupdate.main“ auf „jupdate.util“
+
+
+=== ServiceLoader in der modularen Welt - Teil 2
+
+==== Aufgabenstellung:
+. Benenne die Klasse „jupdate.util.StringUtil“ in „jupdate.util.StringUtilImpl“ um und lassen Sie diese Das interface „jupdate.api.StringUtil“ implementieren (hierfür darf die Methode nicht mehr als „abstract“ definiert sein)
+
+.Klasse StringUtilImpl
+[source,java]
+----
+public final class StringUtilImpl implements StringUtil {
+    public String flip(String s) {
+        [...]
+    }
+}
+----
+
+. Exportiere die Klasse „jupdate.util.StringUtilImpl“ als Service Implementierung von „jupdate.api.StringUtil“
+
+.module-info.java
+[source,java]
+----
+module jupdate.util {
+   requires jupdate.api;
+   provides jupdate.api.StringUtil with jupdate.util.StringUtilImpl;
+}
+
+----
+
+. Ändere in der „main“ Methode den statischen Zugriff auf die Methode „flip“ in einen Aufruf auf einen per „ServiceLoader“ importierten Service des Typs „jupdate.api.StringUtil“
+. Was fällt beim Starten der Anwendung auf?
+
+.Aufruf Serviceloader
+[source,java]
+----
+ServiceLoader<StringUtil> loader = ServiceLoader.load(StringUtil.class);
+Optional<StringUtil> probablyStringService = loader.findFirst();
+probablyStringService.ifPresentOrElse(stringUtil -> logger.info(stringUtil.flip("!dlroW olleH")),
+        () -> System.err.println("Service fehlt"));
+----
+
+==== Ergebnis:
+Durch die lose Kopplung unserer Module gehört die Service-Implementierung nicht zur Menge der Module, welche vom „main“ Modul referenziert werden. Damit fügt unsere IDE das Module beim Start auch nicht zum Module Path hinzu. Es kann somit zur Laufzeit keine Instanz für das Service Interface ermittelt werden.
+

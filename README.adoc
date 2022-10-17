@@ -151,3 +151,38 @@ Ohne Anpassung des Moduldeskriptors „module.info.java“ verwehrt Die IDE sowi
 ==== Ergebnis:
 Wird eine Version bei der Erstellung einer *.jar Datei spezifiziert, so findet sich dieses Metadatum in verschiedenen Ausgaben wieder und kann zum Beispiel zur Fehlersuche verwendet werden.
 
+=== Modulare Anwendung
+
+==== Aufgabenstellung:
+. Erweitere die Projektstruktur für ein neues Modul
+.. In Eclipse: lege ein neues Java-Projekt „util“ an
+.. In IntelliJ IDEA: Erstelle ein neues Modul namens „util“ im Projekt und richte ein Quellverzeichnis „src“ ein
+. Erstelle die Datei „module-info.java“ im neuen Quellverzeichnis und deklarieren dort das Modul „jupdate.util“
+
+.module-info.java in main
+[source,java]
+----
+module jupdate.main {
+    requires java.logging;
+    requires jupdate.util;
+}
+----
+
+. Lege außerdem das Package „jupdate.util“ an und verschiebe die Klasse „StringUtil“ dorthin
+. Exportiere das Package „jupdate.util“ im neuen Modul und definiere eine Abhängigkeit vom bestehenden Modul „jupdate.main“ auf „jupdate.util“
+
+.Moduldeskriptor module-info.java
+[source,java]
+----
+module jupdate.util {
+	exports jupdate.util;
+}
+----
+
+. Zur Korrektur von Fehlern konfigurieren Sie Ihre IDE:
+.. In Eclipse: Lege im Java Build Path eine Projekt-Abhängigkeit vom Projekt „main“ auf das Projekt „util“ für den Module Path an
+.. In IntelliJ IDEA: Lege in den Moduleinstellungen des Moduls „main“ eine Abhängigkeit auf das Modul „util“ an
+. Starte die Anwendung
+
+Ergebnis:
+Im Verlauf der Übung teilen wir unser Modul auf und extrahieren die Klasse StringUtil in ein eigenes Modul. Leider müssen die Abhängigkeiten zusätzlich zur Deklaration im Moduldeskriptor redundant in der IDE konfiguriert werden, um einen lauffähigen Zustand zu erhalten.

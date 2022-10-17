@@ -98,3 +98,56 @@ jar --create --file lib/main.jar -m MANIFEST.txt -C out .
 
 ==== Ergebnis:
 Durch die Spezifikation des Modulnamens in der MANIFEST.MF einer *.jar Datei können wir erreichen, dass ein Automatic Module einen definierten Namen erhält, welcher nicht vom Namen der Datei abgeleitet wird.
+
+=== Moduldeskriptor
+
+==== Aufgabenstellung:
+. Lege im Quellverzeichnis eine Datei „module-info.java“ an und deklariere dort ein Modul namens „jupdate.main“.
+
+.Moduldeskriptor module-info.java
+[source,java]
+----
+module jupdate.main {
+}
+----
+
+. Kompiliere die Quelldateien inklusive „module-info.java“ und erstelle daraus eine *.jar Datei.
+. Starte die Anwendung mit der *.jar Datei auf dem Module Path.
+. Vergewissere Dich, dass der Modulname unabhängig vom Dateinamen wie im Moduldeskriptor deklariert erkannt wird.
+
+==== Ergebnis:
+Mit Hilfe des Moduldeskriptors „module-info.java“ kann ein Modulname deklariert werden, welcher unabhängig vom Namensschema der *.jar Dateien ein stabiles Verhalten zur Laufzeit garantiert.
+
+
+=== Abhängigkeiten zu System-Modulen
+
+==== Aufgabenstellung:
+. Versuche in der „main“ Methode auf die Java Logging API (Package java.util.logging) zuzugreifen
+. Deklariere im Modul „jupdate.main“ eine Abhängigkeit auf das System-Modul „java.logging“
+
+.Moduldeskriptor module-info.java
+[source,java]
+----
+module jupdate.main {
+    requires java.logging;
+}
+----
+
+. Nutze die Java Logging API für die Ausgabe in der Anwendung (statt System.out.println)
+. Kompiliere und starte die Anwendung und vergewissere Dich, dass die Ausgabe über die Java Logging API funktioniert
+
+==== Ergebnis:
+Ohne Anpassung des Moduldeskriptors „module.info.java“ verwehrt Die IDE sowie der Java Compiler den Zugriff auf Packages, welche sich nicht im implizit referenzierten Modul „java.base“ befinden. Nach Deklaration der notwendigen Abhängigkeit, gelingt der Zugriff, wie wir es von nicht-modularen Anwendungen gewohnt sind.
+
+
+=== Versionierung von Modulen
+
+==== Aufgabenstellung:
+. Werfe testweise eine RuntimeException in der „main“ Methode
+. Erstelle die *.jar Datei des Moduls neu und spezifiziere hierbei eine Version für das Modul
+. Inspiziere das erzeugte Modul und stellen sicher, dass die vergebene Version wieder auftaucht
+. Starte die Anwendung und betrachte den StackTrace
+
+==== Ergebnis:
+Wird eine Version bei der Erstellung einer *.jar Datei spezifiziert, so findet sich dieses Metadatum in verschiedenen Ausgaben wieder und kann zum Beispiel zur Fehlersuche verwendet werden.
+

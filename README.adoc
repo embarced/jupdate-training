@@ -8,7 +8,7 @@ Die Beschreibungen zu den anderen Übungen sind in den weiligen Unterordnern.
 
 ==== Hinweis:
 Im Verlauf der nachfolgenden Übungen wird Schritt für Schritt eine modularisierte Beispielanwendung entwickelt. In den Beschreibungen werden verschiedene Packages genannt, welche mit „jupdate“ beginnen. DEr Teil „jupdate“ darf gerne durch andere Basis-Package-Namen ersetzen (z.B. „jupdate.main“ zu „com.example.main“). Damit die Übungen im späteren Verlauf korrekt funktionieren, müssen die Packages aber anhand ihres Suffix klar unterscheidbar sein.
-Die einzelnen Zwischenschritte können können für späteres Selbststudium gesichert werden.
+Die einzelnen Zwischenschritte können für späteres Selbststudium gesichert werden.
 
 ==== Aufgabenstellung:
 . Erstellt in Eurer IDE ein neues Java 9 Projekt
@@ -81,3 +81,20 @@ java -p lib/main.jar -m main/jupdate.main.Main
 ==== Ergebnis:
 Einfache *.jar-Dateien können ohne Erweiterungen für das Modulsystem auch als Module eingesetzt werden. Dies ermöglicht eine einfache Nutzung von Anwendungsbestandteilen sowohl in einer modularisierten, als auch in einer nicht modularisierten Umgebung.
 
+=== Automatic Modules - Teil 3
+
+==== Aufgabenstellung:
+. Erstelle im Projekt eine Datei „MANIFEST.txt“, in welcher das Attribut „Automatic-Module-Name” auf den Werte “jupdate.main” gesetzt ist
+. Erzeuge wie zuvor eine *.jar Datei, wobei allerdings der Parameter “-m MANIFEST.txt” an das “jar” Kommando mitgegeben wird
+
+.Shell
+[source,shell]
+----
+jar --create --file lib/main.jar -m MANIFEST.txt -C out .
+----
+
+. Prüfe, dass der in der MANIFEST.txt eingestellte Modulname verwendet wird
+. Starte die *.jar Datei und verwende den definierten Modulnamen „jupdate.main“
+
+==== Ergebnis:
+Durch die Spezifikation des Modulnamens in der MANIFEST.MF einer *.jar Datei können wir erreichen, dass ein Automatic Module einen definierten Namen erhält, welcher nicht vom Namen der Datei abgeleitet wird.

@@ -186,3 +186,54 @@ module jupdate.util {
 
 Ergebnis:
 Im Verlauf der Übung teilen wir unser Modul auf und extrahieren die Klasse StringUtil in ein eigenes Modul. Leider müssen die Abhängigkeiten zusätzlich zur Deklaration im Moduldeskriptor redundant in der IDE konfiguriert werden, um einen lauffähigen Zustand zu erhalten.
+
+
+=== Nicht-modulare Tests und eine modulare Anwendung - Teil 1
+
+==== Hinweis:
+Weder Eclipse noch IntelliJ IDEA unterstützen auf einfache Art den Mischbetrieb von modularen und nicht modularen Anwendungsbestandteilen. Im einfachsten Fall führt dies dazu, dass alle Module zum Classpath hinzugefügt werden. Dies funktioniert für unseren einfachen Fall, kann in komplexeren Szenarien allerdings zu Problemen führen.
+
+==== Aufgabenstellung:
+. In Eclipse:
+.. lege ein neues Java-Projekt „test“ an
+.. Lege im Java Build Path eine Projekt-Abhängigkeit vom Projekt „test“ auf das Projekt „util“ für den Classpath an
+.. Kopiere all Testabhängigkeiten (Junit 5) in ein Verzeichnis „test-lib“ des Projektes „test“ und binde alle *.jar Dateien im Java Build Path per Classpath ein
+. In IntelliJ IDEA:
+.. Erstelle ein neues Modul namens „test“ im Projekt und richte ein Quellverzeichnis „src“ ein
+.. Lege in den Moduleinstellungen des Moduls „test“ eine Abhängigkeit auf das Modul „util“ an
+.. Kopiere alle Testabhängigkeiten (Junit 5) in ein Verzeichnis „test-lib“ des Moduls „test“und binden Sie alle *.jar Dateien in den Moduleinstellungen als Abhängigkeiten ein
+
+==== Nicht-modulare Tests und eine modulare Anwendung – Teil 2
+
+==== Aufgabenstellung:
+. Implementiere im neuen Projekt/Modul eine Testklasse „jupdate.util.test.StringUtilTest“, welche die Methode „StringUtil.flip“ testet
+
+.Testklasse StringUtilTest
+[source,java]
+----
+public class StringUtilTest {
+    @Test
+    public void testHelloWorld() {
+        Assertions.assertEquals("dlroW olleH", StringUtil.flip("Hello World"));
+    }
+}
+----
+
+. Kompiliere den Test, wobei sich das Modul „jupdate.util“ auf dem Module Path befindet und die Abhängigkeit „junit-jupiter-api” per Classpath eingebunden ist.
+. Übergeben hierbei außerdem den Parameter “--add-modules ALL-MODULE-PATH“, um das “StringUtil” für den Test sichtbar zu machen.
+. Führe den Test aus, wobei sich das Modul „jupdate.util“ auf dem Module Path befindet und die Junit *.jars sowie die Testklasse auf dem Klassenpfad eingebunden sind.
+
+.Shell
+[source,shell]
+----
+$ javac --add-modules ALL-MODULE-PATH -p ../util/lib/util.jar -d out-test -cp lib-test/junit-jupiter-api-5.1.0.jar src/jupdate/util/test/StringUtilTest.java
+
+$ java --add-modules ALL-MODULE-PATH -p ../util/lib/util.jar -cp "out-test;lib-test/*" org.junit.platform.console.ConsoleLauncher -e junit-jupiter -p jupdate.util.test
+----
+
+. Übergebe hierbei wieder den Parameter “--add-modules ALL-MODULE-PATH“, um das “StringUtil” für den Test sichtbar zu machen.
+
+==== Ergebnis:
+Wir haben gesehen, dass sich JUnit Tests für modularisierte Awendungen umsetzen lassen, hierbei allerdings das Modulsystem umgangen wird. Dieser Trick ist für alle Junit Versionen bis einschließlich 5.0.x zwingend notwendig. Dieses Vorgehen ist außerdem mit anderen Testwerkzeugen notwendig, welche noch nicht für die Benutzung im Kontext von Java Modulen angepasst wurden.
+
+

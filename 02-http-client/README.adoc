@@ -1,0 +1,7 @@
+== HTTP Client
+
+* im Ordner lib liegen drei *.jars, die jeweils einen Spring-Boot-Webserver (http, http2 oder Websockets) hochfahren
+
+java -jar 43-HTTP-Server.jar
+
+* danach können die verschiedenen Main-Klassen im package http.client ausgeführt werden

@@ -64,4 +64,27 @@ public interface Hello {
 * versucht den Unterstrich "_" als Bezeichner zu verwenden. Mit welchen Trick könnt ihr trotzdem Unterstriche für Variablennamen verwenden?
 
 
-=== Collection Factory Methods + weitere Features
+=== Collection Factory Methods
+
+==== Aufgaben
+
+* Erweitere die Klasse collection/factories/CollectionFactories.java
+* Erzeuge gefüllte Listen und Sets mit den neuen Factory-Methoden im List und Set-Interface
+** versuche diese Listen/Sets zu ändern
+** was ist der Unterschied zw. Unmodifiable und Immutable und waren sind die erzeugten Listen/Sets nur Unmodifiable?
+* Erzeuge eine Map mit den Nachnamen der Teilnehmer als Key und dem jeweiligen Vornamen als Value
+** Erzeuge eine Map mit beispielhaften Werten mittels Entry-Instanzen
+
+* Erweitere die Klasse collection/factories/CollectionsCopy.java
+** erstelle in der Methode collectionsCopy() eine unveränderbare Kopie der Liste `strings`, versuche das Ergebnis zu verändern (neuen Wert hinzufügen) und teste, dass das Ändern der Originalliste keine Auswirkungen auf die Kopie hat
+** erstelle in der Methode mapCopy() eine unveränderbare Kopie der Map, versuche die neue Map zu verändern und prüfe, dass Änderungen an der alten Map sich nicht auf die neue auswirken
+
+=== Änderungen an Optional
+
+==== Aufgaben
+
+* ergänze die Klasse optionals/OptionalUpdate.java
+* teste die neue Methode `ifPresentOrElse()` und gib beinem leeren Optional die Info "kein Wert" aus
+* erzeuge ein alternatives Optional, wenn es keinen Wert hat
+* erzeuge einen Stream aus einem Optional
+* lese den Wert aus einem Optional oder lass eine Exception werfen (`orElseThrow()`)

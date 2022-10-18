@@ -1,0 +1,95 @@
+== JShell
+
+=== Kommandos JShell
+
+==== Aufgaben:
+* Starte die JShell
+* Zur Erinnerung: Beenden geht mit `/exit`
+* Probiere verschiedene Punkte aus
+** Addiere zwei Zahlen
+** Gib einen Text aus
+** Speichere Werte in eine Variable
+** Verarbeite die Variablen (benannte und implizite, z. B. $1) weiter (einfach etwas ausdenken)
+** Erstellt eine mehrzeilige Methode, z. B. `flip(String s)`, welche String herumdreht
+** Leg eine Klasse mit mindestens einer Instanzvariable und einer Methode an, erzeuge eine Instanz und rufe die Methode auf
+** Speichere das Skript als Textdatei ab
+** Beende JShell und starte sie mit dem eben abgespeicherten Skript neu
+
+==== Beispiele:
+
+```
+jshell> 2 + 2
+$1 ==> 4
+```
+
+
+```
+jshell> System.out.println($1)
+4
+```
+
+```
+jshell> $1 * 10
+$2 ==> 40
+```
+
+
+=== Single-File Source-Code Programs
+
+==== Aufgabe:
+
+* Kompiliere auf der Kommandozeile die Klasse StringFlipper (unter src/main/java) und führe sie aus
+* Führe sie direkt aus (ohne vorher zu kompilieren)
+* Erstelle Dir ein Shell-Skript mit einem Shebang und dem StringFlipper-Beispiel
+** informiere Dich, wie Du auf Deinem Betriebssystem in der Shebang-Zeile das JDK referenzieren kannst
+** Starte den StringFlipper über das Shell-Skript
+
+==== Beispiele:
+
+Die Klasse StringFlipper liegt unter src/main/java
+
+```
+$ javac StringFlipper.java
+$ java StringFlipper
+```
+
+
+On-the-fly Compiler
+```
+$ java StringFlipper.java
+```
+
+
+```
+#!/usr/bin/java --source 11
+
+public class StringFlipper {
+    public static void main(String[] args) {
+        if (args.length < 1) {
+            throw new IllegalArgumentException("at least one argument needed");
+        }
+        System.out.println(flip(args[0]));
+    }
+
+    public static String flip(String s) {
+        StringBuilder flippedString = new StringBuilder();
+        for (int i = (s.length() - 1); i >= 0; i--) {
+            flippedString.append(s.charAt(i));
+        }
+        return flippedString.toString();
+    }
+
+}
+```
+
+```
+$ ./flipstring
+Exception in thread "main" java.lang.IllegalArgumentException: at least one argument needed
+        at StringFlipper.main(flipstring:6)
+```
+
+```
+$ ./flipstring hello
+olleh
+```
+

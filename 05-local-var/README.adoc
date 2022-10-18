@@ -1,0 +1,4 @@
+== Local Variable Type Inference
+
+Es gibt 4 Testklassen, in denen die verschiedenen Varianten gezeigt werden und wo man ausprobieren kann.
+

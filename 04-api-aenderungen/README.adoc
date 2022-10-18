@@ -1,0 +1,67 @@
+== API- und Sprachänderungen
+
+=== Milling Project Coin
+
+==== Aufgabe:
+
+* Probiere das Problem mit SafeVarargs selbst aus und teste die Möglichkeit, die Annotation an privaten Methoden anzuhängen
+
+.SafeVarargs
+[source,java]
+----
+public class SafeVarargs {
+
+    static <T> T[] asArray(T... args) {
+        return args;
+    }
+
+    static <T> T[] arrayOfTwo(T a, T b) {
+        return asArray(a, b);
+    }
+
+
+    public static void main(String[] args) {
+        String[] sArr = arrayOfTwo("Hello", "World");
+        System.out.println(Arrays.asList(sArr));
+
+    }
+
+}
+----
+
+* Baue ein try-with-resources und baue es um, so dass es eine bestehende Variable weiter verwendet
+
+.SafeVarargs
+[source,java]
+----
+try (BufferedReader reader = new BufferedReader(new InputStreamReader(TryWithResources.class.getResourceAsStream("hello.txt")))) {
+	System.out.println(reader.readLine());
+} catch (IOException e) {
+	e.printStackTrace();
+}
+----
+
+* Verwende den Diamond Operator bei der Zuweisung zu generischen Typen und versuche das auch mit anonymen inneren Klassen
+
+* Baue ein Interface mit Default-Methoden und erstelle eine private Methode
+
+.SafeVarargs
+[source,java]
+----
+public interface Hello {
+    String makeHello(String name);
+
+    default void sayHello(String name) {
+	    print(makeHello(name));
+    }
+
+    default void print(String string) {
+	    System.out.println(string);
+    }
+}
+----
+
+* versucht den Unterstrich "_" als Bezeichner zu verwenden. Mit welchen Trick könnt ihr trotzdem Unterstriche für Variablennamen verwenden?
+
+
+=== Collection Factory Methods + weitere Features

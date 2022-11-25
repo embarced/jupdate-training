@@ -45,6 +45,7 @@ public class _3_LocalVarKombinierteTypen {
         // Da der Basistyp eine Kombination zweier Type ist, erhält auch die Variable den kombinierten generischen Typ
         // Dies ist ohne Schlüsselwort "var" nicht abbildbar
         var amphibienFahrzeug = new AmphibienFahrzeug<>();
+
         // Die Variable erhält per Type Inferenz einen Lambda-Typ, welcher beide Interfaces implementiert
         var faehrtUndSchwimmt = (Fahrbar & Schwimmbar) () -> {
         };

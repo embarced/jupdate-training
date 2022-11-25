@@ -20,6 +20,7 @@ public class HttpClientMain {
 	public static void main(String[] args) throws InterruptedException, ExecutionException, NoSuchAlgorithmException, KeyManagementException {
 		HttpClient httpClient = HttpClient.newBuilder().build();
 
+		// HTTP GET
 		{
 			HttpRequest mainRequest = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/hello"))
 					.build();
@@ -87,7 +88,7 @@ public class HttpClientMain {
 					.followRedirects(Redirect.NORMAL).build();
 			
 			// http://www.oio.de hat eine Weiterleitung auf https://www.oio.de
-			HttpRequest mainRequest = HttpRequest.newBuilder().uri(URI.create("http://www.oio.de"))
+			HttpRequest mainRequest = HttpRequest.newBuilder().uri(URI.create("http://google.de"))
 					.build();
 
 			HttpResponse<String> response;

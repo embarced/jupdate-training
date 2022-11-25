@@ -36,6 +36,11 @@ public class _2_LocalVar {
         // BigDecimal
         var objekt = BigDecimal.ONE;
         assertThat(objekt).isInstanceOf(BigDecimal.class);
+
+        var list = new ArrayList<Integer>();
+
+        var integers = List.of(1, 2, 3);
+
     }
 
     @Test
@@ -68,8 +73,10 @@ public class _2_LocalVar {
     @Test
     @DisplayName("Local Variable Type Inference fuer Lambda Ausdruecke nicht moeglich")
     void varLambdas() {
-        // var helloFunction = name -> "Hello, " + name;
+        Function<String, String> lambda = name -> "Hello, " + name;
+        // var lambda = name -> "Hello, " + name;
         // var intParser = Integer::parseInt;
+
 
     }
 

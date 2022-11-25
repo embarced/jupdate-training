@@ -27,8 +27,8 @@ public class _4_LocalVarLambdaParameter {
     @Test
     @DisplayName("Dies ist nützlich für die Nutzung von type annotations")
     void varLambdaParameterTypeAnnotations() {
-//        BiConsumer<String, String> printerWithNullable = (@NonNull var s1, @Nullable var s2) -> System.out
-//                .println(s1 + (s2 == null ? "" : " " + s2));
+        BiConsumer<String, String> printerWithNullable = (@NonNull String s1, @Nullable String s2) -> System.out
+                .println(s1 + (s2 == null ? "" : " " + s2));
     }
 
 }

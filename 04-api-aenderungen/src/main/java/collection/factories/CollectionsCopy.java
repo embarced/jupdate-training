@@ -49,9 +49,10 @@ public class CollectionsCopy {
 		strings.add("a");
 		
 		// Erstellt eine nicht aenderbare Kopie der List
+		List<String> stringsCopy = List.copyOf(strings);
 
 		// Aenderungen nicht möglich (UnsupportedOperationException)
-		// stringsCopy.add("b");
+		stringsCopy.add("b");
 		
 		// Spaetere Aenderungen der original List nicht sichtbar fuer Kopie
 

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 @SuppressWarnings("unused")
@@ -55,10 +56,15 @@ public class CollectionFactories {
 	private static void collectionFactories() {
 		{
 			// Erstellung einer List ueber Factory Methode:
+			List<Object> leereListe = List.of();
+			List<String> liste = List.of("a", "b", "c");
+			
 		}
 		
 		{
 			// Erstellung eines Set ueber Factory Methode:
+			Set<Integer> menge = Set.of(1, 2, 3);
+			// menge.add(4);
 		}
 	}
 	
@@ -74,6 +80,12 @@ public class CollectionFactories {
 	private static void mapFactories() {
 		{
 			// Erstellung einer Map ueber Factory Methode:
+			Map<String, String> namen = Map.of("falk", "sippach");
+			Entry<String, String> entry = Map.entry("falk", "sippach");
+			Map<String, String> namen2 = Map.ofEntries(entry);
+			System.out.println(namen2);
+			
+			
 		}
 		
 		{

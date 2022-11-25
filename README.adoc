@@ -90,7 +90,7 @@ Einfache *.jar-Dateien können ohne Erweiterungen für das Modulsystem auch als 
 .Shell
 [source,shell]
 ----
-jar --create --file lib/main.jar -m MANIFEST.txt -C out .
+jar --create --file lib/main.jar -m MANIFEST.MF -C out .
 ----
 
 . Prüfe, dass der in der MANIFEST.txt eingestellte Modulname verwendet wird

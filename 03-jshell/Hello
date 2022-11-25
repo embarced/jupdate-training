@@ -1,0 +1,10 @@
+#!/usr/bin/java --source 11
+import java.io.*;
+
+public class Hello {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+        System.out.println(new File("Hello").getAbsolutePath());
+    }
+
+}

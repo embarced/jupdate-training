@@ -28,8 +28,10 @@ public class OptionalUpdate {
 	@SuppressWarnings("unused")
 	private static void optionalErweiterungen() {
 		Optional<String> emptyOptional = Optional.empty();
+		emptyOptional.ifPresentOrElse(System.out::println, () -> System.out.println("leer"));
 		
 		// Behandlung von Existenz und Abwesenheit eins Wertes in einem Aufruf
+		emptyOptional.or(() -> Optional.of("foobar"));
 
 		// Gibt das bestehende Optional zurueck, falls dies ein Wert hat oder erzeugt alternativ ein neues ueber Supplier
 

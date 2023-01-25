@@ -1,11 +1,6 @@
 package collection.factories;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class CollectionsCopy {
 	
@@ -49,6 +44,14 @@ public class CollectionsCopy {
 		strings.add("a");
 		
 		// Erstellt eine nicht aenderbare Kopie der List
+		List.copyOf(strings);
+		Set<String> strings1 = Set.copyOf(strings);
+		strings.add("b");
+		System.out.println(strings1);
+		//strings1.add("");
+
+		Arrays.asList("a", null); // ist zulässig
+		Set.of("a", null); // wirft NPE
 
 		// Aenderungen nicht möglich (UnsupportedOperationException)
 		// stringsCopy.add("b");

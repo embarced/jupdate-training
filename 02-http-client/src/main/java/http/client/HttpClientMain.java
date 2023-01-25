@@ -37,6 +37,7 @@ public class HttpClientMain {
 		{
 			HttpRequest mainRequest = HttpRequest.newBuilder().POST(BodyPublishers.ofString("Schick mich!"))
 					.header("Content-Type", "text/plain")
+					.header("Accept", "text/plain")
 					.uri(URI.create("http://localhost:8080/postIt"))
 					.build();
 			
@@ -86,8 +87,7 @@ public class HttpClientMain {
 			HttpClient httpClient2 = HttpClient.newBuilder().executor(ForkJoinPool.commonPool())
 					.followRedirects(Redirect.NORMAL).build();
 			
-			// http://www.oio.de hat eine Weiterleitung auf https://www.oio.de
-			HttpRequest mainRequest = HttpRequest.newBuilder().uri(URI.create("http://www.oio.de"))
+			HttpRequest mainRequest = HttpRequest.newBuilder().uri(URI.create("http://www.google.de"))
 					.build();
 
 			HttpResponse<String> response;

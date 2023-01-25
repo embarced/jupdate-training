@@ -38,6 +38,15 @@ public class _3_LocalVarKombinierteTypen {
         }
     }
 
+    public static class Schwimmauto implements Fahrbar, Schwimmbar {
+
+        @Override
+        public void run() {
+            System.out.println("Schwimmauto");
+        }
+    }
+
+
     @Test
     @DisplayName("Inference von Typen mit Schlüsselwort \"var\"")
     void kombinierteTypen() {
